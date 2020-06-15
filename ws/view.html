@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  
+
+</head>
+<body>
+  <div class="container py-5 px-4">
+    <header class="text-center">
+      <h3 id="registered-user"></h3>
+      <h1 class="display-4 text-white">Group Chat</h1>
+      
+    </header>
+  
+    <div class="row rounded-lg overflow-hidden shadow">
+      <div class="col-4 px-0">
+        <div class="bg-white">
+  
+          <div class="bg-gray px-4 py-2 bg-light">
+            <p class="h5 mb-0 py-1">Online User</p>
+          </div>
+  
+          <div class="messages-box">
+            <div class="list-group rounded-0" id="online-list">
+              
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-8 px-0">
+        <div class="px-4 py-5 chat-box bg-white" id="messages">
+        </div>
+  
+        <!-- Typing area -->
+          <div class="input-group">
+            <input type="text" placeholder="Type a message" aria-describedby="button-addon2" class="form-control rounded-0 border-0 py-4 bg-light" id="input">
+            <div class="input-group-append">
+              <button class="btn btn-success btn-lg" onclick="send()">Send</i>
+              </button>
+            </div>
+          </div>
+  
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="myModal"  data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="registered-form">
+        <div class="main">
+          <p class="sign" align="center">Sign in</p>
+          <form class="form1" id="form-login">
+            <div>
+            <input class="un" type="text" align="center" placeholder="Username" id="name" required>
+            </div>
+            <div>
+              <label for="name" generated="true" class="error"></label>
+            </div>  
+            <button class="submit" type="button" onclick="sendName()" align="center" id="test">Login</button>
+          </form>           
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+  
+</body>
+<style>
+  body {
+  background-color: #74EBD5;
+  background-image: linear-gradient(90deg, #74EBD5 0%, #9FACE6 100%);
+
+  min-height: 100vh;
+}
+[avatar]:before {
+  content:attr(avatar);
+  display:inline-block;
+  font-size:1em;
+  width:2.5em;
+  height:2.5em;
+  line-height:2.5em;
+  text-align:center;
+  border-radius:50%;
+  background:red;
+  vertical-align:middle;
+  margin-right:1em;
+  color:white;
+  }
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  width: 5px;
+  background: #f5f5f5;
+}
+
+::-webkit-scrollbar-thumb {
+  width: 1em;
+  background-color: #ddd;
+  outline: 1px solid slategrey;
+  border-radius: 1rem;
+}
+
+.text-small {
+  font-size: 0.9rem;
+}
+
+.messages-box,
+.chat-box {
+  height: 510px;
+  overflow-y: scroll;
+}
+
+.rounded-lg {
+  border-radius: 0.5rem;
+}
+
+input::placeholder {
+  font-size: 0.9rem;
+  color: #999;
+}
+
+.main {
+ background-color: #FFFFFF;
+ width: 500px;
+ height: 500px;
+ margin: 10em auto;
+ border-radius: 1.5em;
+ box-shadow: 0px 11px 35px 2px rgba(0, 0, 0, 0.14);
+}
+
+.sign {
+ padding-top: 90px;
+ color: #8C55AA;
+ font-family: 'Ubuntu', sans-serif;
+ font-weight: bold;
+ font-size: 30px;
+}
+
+.un {
+width: 76%;
+color: rgb(38, 50, 56);
+font-weight: 700;
+font-size: 20px;
+letter-spacing: 3px;
+background: rgba(140, 126, 126, 0.04);
+padding: 15px 20px;
+border: none;
+border-radius: 20px;
+outline: none;
+box-sizing: border-box;
+border: 2px solid rgba(0, 0, 0, 0.02);
+margin-bottom: 50px;
+margin-left: 60px;
+text-align: center;
+margin-bottom: 35px;
+font-family: 'Ubuntu', sans-serif;
+}
+
+form.form1 {
+ padding-top: 30px;
+}
+
+.pass {
+ width: 76%;
+color: rgb(38, 50, 56);
+font-weight: 700;
+font-size: 20px;
+letter-spacing: 3px;
+background: rgba(140, 126, 126, 0.04);
+padding: 15px 20px;
+border: none;
+border-radius: 20px;
+outline: none;
+box-sizing: border-box;
+border: 2px solid rgba(0, 0, 0, 0.02);
+margin-bottom: 50px;
+margin-left: 60px;
+text-align: center;
+margin-bottom: 35px;
+font-family: 'Ubuntu', sans-serif;
+}
+
+
+.un:focus, .pass:focus {
+ border: 2px solid rgba(0, 0, 0, 0.18) !important;
+ 
+}
+
+.submit {
+cursor: pointer;
+ border-radius: 5em;
+ color: #fff;
+ background: linear-gradient(to right, #9C27B0, #E040FB);
+ border: 0;
+ padding-left: 60px;
+ padding-right: 60px;
+ padding-bottom: 20px;
+ padding-top: 20px;
+ font-family: 'Ubuntu', sans-serif;
+ margin-left: 34%;
+ font-size: 20px;
+ box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.04);
+}
+
+.forgot {
+ text-shadow: 0px 0px 3px rgba(117, 117, 117, 0.12);
+ color: #E1BEE7;
+ padding-top: 80px;
+}
+
+a {
+ text-shadow: 0px 0px 3px rgba(117, 117, 117, 0.12);
+ color: #E1BEE7;
+ text-decoration: none
+}
+.modal-dialog {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  max-width: none;
+}
+
+.modal-content {
+  height: auto;
+  min-height: 100%;
+  border-radius: 0;
+  background-color: #74EBD5;
+  background-image: linear-gradient(90deg, #74EBD5 0%, #9FACE6 100%);
+
+  min-height: 100vh;
+}
+.error {
+  position: absolute !important;
+  top: 44% !important;
+  left: 45% !important;
+}
+</style>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
+<script>
+  $(document).ready(function() {
+         $('#myModal').modal('show');
+         $('#myModal').modal({backdrop: 'static', keyboard: false});
+});
+
+        let ws = new WebSocket("ws://localhost:4000");
+        let userName;
+
+      ws.addEventListener("message", function (event) {
+        try {
+          const data = JSON.parse(event.data);
+          if (data.type === "join") {
+            addUser(data.message.name);
+          }
+          if (data.type === "online") {
+              data.message.users.map((user) => addUser(user));
+          }
+          if (data.type === "left") {
+              removeUser(data.message.name);
+          }
+          if (data.type === "name") {
+            const rf = document.getElementById("registered-form");
+            const h3 = document.getElementById("registered-user");
+            const input = document.getElementById("name");
+            rf.style.display='none';
+            h3.innerText = input.value;
+
+            console.log(input.value);
+          }
+          if(data.type === "message"){
+            addMessage(data.message, data.user);
+          }
+        } catch (e) {
+          return false;
+        }
+      });
+      function send() {
+        const input = document.getElementById("input");       
+        if(input.value == ""){   
+        
+        } else {
+          const user = document.getElementById("registered-user");
+          
+          
+        const data = JSON.stringify({
+          type: "message",
+          message: input.value,
+          user: user.value,
+        });
+        ws.send(data);
+        addMessage(input.value,user.value);
+        input.value ="";
+        }
+        
+      }
+
+      function sendName() {
+        if ($('#form-login').valid()) {
+          const name = document.getElementById("name");
+          const data = JSON.stringify({ type: "name", name: name.value });
+          ws.send(data);
+          $('#myModal').modal('hide');
+          $('#registered-user').val(name.value);
+        }
+      }
+
+      function addUser(name) {
+        const div = document.getElementById("online-list");
+        const letter = name.charAt(0).toUpperCase();
+        div.insertAdjacentHTML('beforeend','<div= "list-user"><a class="list-group-item list-group-item-action list-group-item-light rounded-0"><div class="media"><p alt="user" width="50" class="rounded-circle" avatar='+letter+'><div class="media-body ml-4"><div class="d-flex align-items-center justify-content-between mb-1"><h5 class="mb-0">'+name+' </h5></div></div></div></a></div>');
+      }
+
+      function addMessage(message, user) {
+        const div = document.getElementById("messages");
+        const userSend = document.getElementById("registered-user");
+
+        let today = new Date();
+        let time = today.getHours() + ":" + today.getMinutes();
+        
+        if(user == userSend.value){
+          div.insertAdjacentHTML('beforeend','<div class="media w-50 ml-auto mb-3"><div class="media-body"><div class="bg-primary rounded py-2 px-3 mb-2"><p class="text-small mb-0 text-white"> '+message+'</p></div><p class="small text-muted">'+time+'</p></div></div>');
+        } else {
+          div.insertAdjacentHTML('beforeend','<p class="small text-muted">'+user+'</p><div class="media w-50 mb-3"><div class="media-body ml-3"><div class="bg-light rounded py-2 px-3 mb-2"><p class="text-small mb-0 text-muted">'+message+'</p></div><p class="small text-muted">'+time+'</p></div></div>');
+        }
+        div.scrollTop = div.scrollHeight;
+      }
+
+      function removeUser(name) {
+        const list = document.getElementById("online-list");
+        const element = list.querySelectorAll("h5");
+        Array.from(element).map((h5) => {
+            if(h5.innerText == name) {
+                var x = h5.parentElement.parentElement.parentElement.parentElement.parentElement;
+                x.remove();
+            }
+        })
+      }
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+</html>
