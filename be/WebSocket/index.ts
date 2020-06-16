@@ -10,7 +10,6 @@ export default async (ctx: any, next: () => Promise<void>) => {
     const sock = await ctx.upgrade();
     for await (const ev of sock) {
       if (typeof ev === "string") {
-        // text message
         console.log("ws:Text", ev);
         await sock.send(ev);
       }

@@ -6,9 +6,9 @@ import {
 } from "https://deno.land/std/ws/mod.ts";
 
 async function main() {
-  console.log("http://localhost:4000");
+  console.log("192.168.145.101:4000");
 
-  for await (const req of serve("localhost:4000")) {
+  for await (const req of serve("192.168.145.101:4000" )) {
     if (acceptable(req)) {
       const { conn, headers, w: bufWriter, r: bufReader } = req;
       acceptWebSocket({ conn, headers, bufReader, bufWriter }).then(

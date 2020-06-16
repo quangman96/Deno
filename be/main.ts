@@ -9,8 +9,8 @@ import authMiddleware from "./middleware/auth.ts";
 const env = config();
 
 const app = new Application();
-const HOST = env.APP_HOST || "http://localhost";
-const PORT = +env.APP_PORT || 4000;
+const HOST = env.APP_HOST || "http://localhost" || "192.168.145.101";
+const PORT = +env.APP_PORT || 4000 ;
 
 app.use(websocket);
 app.use(oakCors());
