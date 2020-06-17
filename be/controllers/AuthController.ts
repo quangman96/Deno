@@ -1,5 +1,4 @@
 import db from "../config/databases.ts";
-import { ObjectId } from "https://deno.land/x/mongo@v0.6.0/mod.ts";
 const userCollection = db.collection("users");
 import validation from "../validation.ts";
 import hash from "../util/hash.ts";
@@ -7,7 +6,6 @@ import token from "../util/token.ts";
 
 export default {
   async login(ctx: any) {
-    // validation
     const value = await validation.validateLogin(ctx);
     if (!value) {
       return;
@@ -26,7 +24,10 @@ export default {
     // verify password
     const passwordMatched = await hash.verify(user.password, value.password);
     if (!passwordMatched) {
-      ctx.response.body = { error: "Password is incorrect" };
+      ctx.response.status = 422;
+      ctx.response.body = {
+        errors: { message: "Password is incorrect" },
+      };                      
       return;
     }
 

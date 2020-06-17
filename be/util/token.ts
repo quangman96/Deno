@@ -26,7 +26,7 @@ export default {
     return makeJwt({ header, payload, key });
   },
   async validate(token: string) {
-    return !!await validateJwt(token, key, { isThrowing: false });
+    return !!await validateJwt(token, key);
   },
   fetchUserId(token: string) {
     return validateJwtObject(parseAndDecode(token)).payload;

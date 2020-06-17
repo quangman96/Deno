@@ -5,11 +5,11 @@ import { oakCors } from "https://deno.land/x/cors/mod.ts";
 const router = new Router();
 
 router
-  .get("/user", UserController.index)
-  .get("/user/:id", UserController.show)
-  .post("/user", UserController.store)
+  .get("/user", UserController.list)
+  .get("/user/:id", UserController.findById)
+  .post("/user", UserController.create)
   .patch("/user/:id", UserController.update)
-  .delete("/user/:id", UserController.destroy);
+  .delete("/user/:id", UserController.delete);
 
 router
   .options("/login", oakCors())

@@ -252,7 +252,7 @@ a {
          $('#myModal').modal({backdrop: 'static', keyboard: false});
 });
 
-        let ws = new WebSocket("ws://192.168.145.101:4000");
+        let ws = new WebSocket("ws://localhost:4000");
         let userName;
 
       ws.addEventListener("message", function (event) {

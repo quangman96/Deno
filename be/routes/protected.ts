@@ -7,7 +7,6 @@ import db from "../config/databases.ts";
 import AuthMiddleware from "../middleware/auth.ts";
 const userCollection = db.collection("users");
 
-protectedRouter.options("/me", oakCors());
 protectedRouter.get("/me", async (ctx: any) => {
   const headerToken = await AuthMiddleware.authorized(ctx);
   if (!headerToken) return;

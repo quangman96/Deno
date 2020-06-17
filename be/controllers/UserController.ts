@@ -5,11 +5,11 @@ import validation from "../validation.ts";
 import hash from "../util/hash.ts";
 
 export default {
-  async index(ctx: any) {
+  async list(ctx: any) {
     const data = await user.find();
     ctx.response.body = data;
   },
-  async show(ctx: any) {
+  async findById(ctx: any) {
     try {
       const data = await user.findOne({ _id: ObjectId(ctx.params.id) });
       ctx.response.body = data;
@@ -18,7 +18,7 @@ export default {
       ctx.response.body = { error: "User does't exists in our database." };
     }
   },
-  async store(ctx: any) {
+  async create(ctx: any) {
     const value = await validation.validate(ctx);
     if (value) {
       value.created_at = parseInt((new Date().getTime() / 1000).toString());
@@ -46,10 +46,10 @@ export default {
       }
     }
   },
-  async destroy(ctx: any) {
+  async delete(ctx: any) {
     try {
       await user.deleteOne({ _id: ObjectId(ctx.params.id) });
-      ctx.response.status = 204; // no content
+      ctx.response.status = 204;
     } catch (e) {
       ctx.response.status = 404;
       ctx.response.body = { error: "User does't exists in our database." };

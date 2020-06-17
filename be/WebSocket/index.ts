@@ -1,7 +1,5 @@
 import {
-  acceptWebSocket,
   acceptable,
-  WebSocket,
 } from "https://deno.land/std/ws/mod.ts";
 
 export default async (ctx: any, next: () => Promise<void>) => {
